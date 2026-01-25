@@ -1,0 +1,36 @@
+{
+  "name": "searxng",
+  "description": "Search the web using SearXNG, a privacy-respecting metasearch engine. Returns JSON results with titles, URLs, and snippets. Requires SEARXNG_ENDPOINT environment variable to be set to your SearXNG instance hostname (e.g., 'search.example.com'). Results are limited to 50KB.",
+  "command": "sh",
+  "args": ["-c", "endpoint=\"${SEARXNG_ENDPOINT:-}\"; if [ -z \"$endpoint\" ]; then echo '{\"error\":\"SEARXNG_ENDPOINT environment variable is not set. Please set it to your SearXNG instance hostname (e.g., export SEARXNG_ENDPOINT=search.example.com)\"}'; exit 1; fi; url=\"https://${endpoint}/search?q={{query}}&format=json\"; [ -n \"{{categories}}\" ] && url=\"${url}&categories={{categories}}\"; [ -n \"{{time_range}}\" ] && url=\"${url}&time_range={{time_range}}\"; [ -n \"{{language}}\" ] && url=\"${url}&language={{language}}\"; curl -s \"$url\" | head -c 50000"],
+  "parameters": [
+    {
+      "name": "query",
+      "description": "The search query string (URL-encoded spaces as + signs)",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "categories",
+      "description": "Search category: general, news, images, videos, science, it, files, social+media, music, map",
+      "type": "string",
+      "required": false
+    },
+    {
+      "name": "time_range",
+      "description": "Time filter: day, week, month, year",
+      "type": "string",
+      "required": false,
+      "enum": ["day", "week", "month", "year"]
+    },
+    {
+      "name": "language",
+      "description": "Language code (e.g., 'en', 'de', 'fr')",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "timeout": 30,
+  "working_dir": "inherit",
+  "depends_on": ["curl"]
+}

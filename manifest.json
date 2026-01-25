@@ -1,0 +1,13 @@
+{
+  "name": "searxng",
+  "version": "1.0.0",
+  "description": "SearXNG web search tool for ayo - a privacy-respecting metasearch engine integration",
+  "author": "alexcabrera",
+  "repository": "https://github.com/alexcabrera/ayo-plugins-searxng",
+  "license": "MIT",
+  "tools": ["searxng"],
+  "default_tools": {
+    "search": "searxng"
+  },
+  "ayo_version": ">=0.2.0"
+}
