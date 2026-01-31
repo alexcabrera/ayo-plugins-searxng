@@ -1,0 +1,22 @@
+{{- /* Status icon */ -}}
+{{- $icon := icon "pending" -}}
+{{- if .IsError -}}
+  {{- $icon = icon "error" -}}
+{{- else if not .IsPending -}}
+  {{- if not .IsRunning -}}
+    {{- $icon = icon "success" -}}
+  {{- else -}}
+    {{- $icon = icon "running" -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Header with tool name and query */ -}}
+{{- $query := index .Params "query" | printf "%s" -}}
+{{- $truncatedQuery := truncate 50 $query -}}
+{{ $icon }} {{ style "#7eb8da" "Search" }} {{ style "#6c6c6c" $truncatedQuery }}
+{{- if and (not .IsPending) (not .IsRunning) -}}
+  {{- if .Result -}}
+
+  {{ truncate 3000 .Result | jsonPretty }}
+  {{- end -}}
+{{- end -}}

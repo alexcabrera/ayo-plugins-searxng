@@ -1,0 +1,5 @@
+{
+  "name": "searxng",
+  "description": "Renders SearXNG search results",
+  "max_lines": 15
+}
